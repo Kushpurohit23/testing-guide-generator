@@ -1,0 +1,12 @@
+digraph Automaton {
+start[label = start, shape = plain];
+q1[shape=circle];
+start ->q1;
+q2[shape=circle];
+q3[shape=doublecircle];
+q1->q2[label="ε"];
+q2->q3[label="0"];
+q1->q1[label="0"];
+q1->q1[label="0"];
+q1->q1[label="0"];
+}
