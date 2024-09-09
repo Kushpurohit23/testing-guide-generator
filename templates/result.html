@@ -82,6 +82,21 @@
             background-color: #cce5ff;
             transition: background-color 0.3s ease;
         }
+
+        .home-link {
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .home-link:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -129,6 +144,7 @@
                 </div>
             </div>
         {% endfor %}
+        <a href="/" class="home-link">Home</a>
     </div>
 </body>
 </html>

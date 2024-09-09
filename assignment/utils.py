@@ -20,23 +20,30 @@ def getTestLLM(context, screenshots):
     # myfile = genai.upload_file(buffer)
     print("*"*100)
     model = genai.GenerativeModel("gemini-1.5-flash",generation_config={"response_mime_type": "application/json"})
-    result = model.generate_content(
-    [myfile, "\n\n", """	
-            Additional Context aboout image is : {} """.format(context)+ """
+    test = 1
+    txt = ''
+    while test :
+        try :
+            result = model.generate_content(
+            [myfile, "\n\n", """	
+                    Additional Context aboout image is : {} """.format(context)+ """
+                    
+                    You are an expert tester and Quality Assurance Engineer with 10+ Years of experience in domain, now you are given with the task of identifying various features for which testing has to be done before releasing product as an experienced person you find it very precisely. 
             
-            You are an expert tester and Quality Assurance Engineer with 10+ Years of experience in domain, now you are given with the task of identifying various features for which testing has to be done before releasing product as an experienced person you find it very precisely. 
-	
-	        IMPORTANT : You are required to identify each and every component which needs to be tested from image     only.and provide at most 10 most relevent features.
-	
-	        features give response JSON format {Feature : [note down features here]}
-	        here name of key must be Feature.
-            NOTE : ONLY provide feature name no other description
+                    IMPORTANT : You are required to identify each and every component which needs to be tested from image     only.and provide at most 10 most relevent features.
             
-    """])
-    print("*"*100)
-    txt = json.loads(result.text)
-    print("*"*100)
-    print(txt)
+                    features give response JSON format {Feature : [note down features here]}
+                    here name of key must be Feature.
+                    NOTE : ONLY provide feature name no other description
+                    
+            """])
+            print("*"*100)
+            txt = json.loads(result.text)
+            if(len(txt['Feature']) > 0) : test = 0 
+            print("*"*100)
+            print(txt)
+        except Exception as e :
+            print(e)
     lsr = []
     psl = []
     i=0
@@ -104,16 +111,15 @@ def getTestLLM(context, screenshots):
     }
 
         Strictly follow the schema and write each and every part precisely none of the details shold be missed as it impose big financial loss."""
-        result = model.generate_content(
-            [myfile, "\n\n",prommpt])
-        lsr.append(json.loads(result.text))
-        psl.append(prommpt)
-        # if(i>3) : break
-    print("*"*100)
-    print(lsr)
-    print("*"*100)
+        try:
+            result = model.generate_content(
+                [myfile, "\n\n",prommpt])
+            lsr.append(json.loads(result.text))
+            psl.append(prommpt)
+        except Exception as e:
+            print(e)
     # print("*"*100)
-    # print(psl)
+    # print(lsr)
     # print("*"*100)
     return lsr 
 
